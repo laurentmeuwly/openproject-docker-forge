@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  openproject:
+    image: openproject/community:latest
+    container_name: openproject
+    restart: always
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://openproject:openproject@db/openproject
+    depends_on:
+      - db
+    volumes:
+      - ./data:/var/openproject
+
+  db:
+    image: postgres:13
+    container_name: openproject_db
+    restart: always
+    environment:
+      POSTGRES_DB: openproject
+      POSTGRES_USER: openproject
+      POSTGRES_PASSWORD: openproject
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
