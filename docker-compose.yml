@@ -14,7 +14,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./data:/var/openproject
+      - opdata:/var/openproject
 
   db:
     image: postgres:13
@@ -29,3 +29,4 @@ services:
 
 volumes:
   pgdata:
+  opdata:
