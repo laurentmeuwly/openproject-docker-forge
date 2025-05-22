@@ -26,6 +26,20 @@ services:
       POSTGRES_PASSWORD: openproject
     volumes:
       - pgdata:/var/lib/postgresql/data
+      
+  worker:
+    image: openproject/community:latest
+    container_name: openproject_worker
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://openproject:openproject@db/openproject
+    command: ["bin/rails", "good_job start"]
+    volumes:
+      - opdata:/var/openproject
 
 volumes:
   pgdata:
